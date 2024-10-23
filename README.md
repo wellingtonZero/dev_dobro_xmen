@@ -4,4 +4,4 @@
 <p>Agora o personagem Ciclope e Wolverine possui animações, ideia que tive de implementar e mostrar minhas habilidades extracurriculares</p>
 <img width="600" src="https://github.com/user-attachments/assets/213b7790-f262-43af-885b-0b33009569db" alt="Tela1">
 <br>
-<a href="https://wellingtonzero.github.io/dev_dobro_xmen/">X-Men Página</a>
+<a href="https://wellingtonzero.github.io/dev_dobro_xmen/">Projeto X-Men Página</a>

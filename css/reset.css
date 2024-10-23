@@ -1,0 +1,10 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /*foi usado para trabalhar com a largura se não colocar tem que ficar calculando alguns coisas de cabeça de largura e altura*/
+}
+
+ul{
+    list-style: none
+}

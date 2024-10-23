@@ -23,7 +23,7 @@
         <section class="personagens">
             <h1 class="titulo">Selecione um personagem</h1>
             <ul class="lista-de-personagens">
-                <li class="personagem" id="ciclope" data-name="Ciclope"
+                <li class="personagem selecionado" id="ciclope" data-name="Ciclope"
                     data-description="Ele tem o poder de disparar rajadas ópticas por um acidente que aconteceu com ele quando criança, mas não consegue controlá-los">
                     <img src="imagens/card-ciclope.jpg" alt="Personagem Ciclope">
                 </li>
@@ -51,31 +51,32 @@
                     data-description="Ele é um mutante que nasceu com cauda, orelhas pontudas e com o poder de se Teletransportar">
                     <img src="imagens/card-noturno.jpg" alt="Personagem Noturno">
                 </li>
-                <li class="personagem selecionado" id="magneto" data-name="Magneto"
+                <li class="personagem" id="magneto" data-name="Magneto"
                     data-description="Ele tem o poder de magnetocinese, ou seja, controlar objetos de metal e criar campos magnéticos">
                     <img src="imagens/card-magneto.jpg" alt="Personagem Magneto">
                 </li>
             </ul>
         </section>
-
         <section class="personagem-selecionado">
-            <!-- Canvas para o Rive (oculto por padrão) -->
-            <canvas id="riveCanvas" class="personagem-grande" style="display: none;"></canvas>
-            <img id="imagem-personagem-grande" class="personagem-grande" src="" alt="Imagem grande do personagem"
-                style="display: none;">
+            <!-- Adicionando o canvas para o Rive -->
+            <div class="canvas-container">
+                <canvas id="riveCanvas" class="personagem-grande"></canvas>
+            </div>
+            
             <div class="informacoes-personagem">
-                <h2 class="nome-personagem" id="nome-personagem">Magneto</h2>
-                <p class="descricao-personagem" id="descricao-personagem">
-                    Ele tem o poder de magnetocinese, ou seja, controlar objetos de metal e criar campos magnéticos.
-                </p>
+                <h2 class="nome-personagem" id="nome-personagem">Ciclope</h2>
+                <p class="descricao-personagem" id="descricao-personagem">Ele tem o poder de disparar rajadas ópticas
+                    por
+                    um acidente que aconteceu com ele quando criança, mas não consegue controlá-los</p>
             </div>
         </section>
-
     </main>
     <script>
+        // Seleciona o canvas do Rive
         const canvas = document.getElementById('riveCanvas');
         const ctx = canvas.getContext('2d');
 
+        // Ajusta a resolução do canvas
         const setCanvasResolution = () => {
             const dpr = window.devicePixelRatio || 1;
             const rect = canvas.getBoundingClientRect();
@@ -83,13 +84,13 @@
             canvas.height = rect.height * dpr;
             ctx.scale(dpr, dpr);
         };
-        setCanvasResolution();
-
+        setCanvasResolution();  // Chama a função para ajustar a resolução
+        // Variável para armazenar a instância do Rive
         let riveInstance;
-
+        // Função para carregar a animação do Rive
         const loadRiveAnimation = (fileName) => {
             if (riveInstance) {
-                riveInstance.cleanup();
+                riveInstance.cleanup();  // Limpa a instância anterior, se houver
             }
 
             riveInstance = new rive.Rive({
@@ -97,48 +98,37 @@
                 canvas: canvas,
                 stateMachines: 'Anime',
                 autoplay: true,
-                fit: rive.Fit.COVER,
+                fit: rive.Fit.CONTAIN,  // Ou experimente FIT
                 alignment: rive.Alignment.CENTER
             });
         };
-
+        // Seleciona todos os personagens
         const personagens = document.querySelectorAll('.personagem');
-        const imagemPersonagemGrande = document.getElementById('imagem-personagem-grande');
-        const riveCanvas = document.getElementById('riveCanvas');
-
         personagens.forEach((personagem) => {
             personagem.addEventListener('mouseenter', () => {
-                const idPersonagem = personagem.getAttribute('id');
                 const personagemSelecionado = document.querySelector('.selecionado');
                 personagemSelecionado.classList.remove('selecionado');
                 personagem.classList.add('selecionado');
 
-                if (idPersonagem === 'wolverine' || idPersonagem === 'ciclope') {
-                    loadRiveAnimation(idPersonagem);
-                    riveCanvas.style.display = 'block';
-                    imagemPersonagemGrande.style.display = 'none';
-                } else {
-                    imagemPersonagemGrande.src = `imagens/card-${idPersonagem}.png`;
-                    imagemPersonagemGrande.style.display = 'block';
-                    riveCanvas.style.display = 'none';
-                }
+                const idPersonagem = personagem.attributes.id.value;
 
-                document.getElementById('nome-personagem').innerText = personagem.getAttribute('data-name');
-                document.getElementById('descricao-personagem').innerText = personagem.getAttribute('data-description');
+                if (idPersonagem === 'wolverine') {
+                    loadRiveAnimation('wolverine');  // Carrega o arquivo Rive do Wolverine
+                } else {
+                    // Caso seja outro personagem, exibe a imagem PNG
+                    const imagemPersonagemGrande = document.querySelector('.personagem-grande');
+                    imagemPersonagemGrande.src = `imagens/card-${idPersonagem}.png`;
+                }
+                // Atualiza nome e descrição do personagem
+                const nomePersonagem = document.getElementById('nome-personagem');
+                nomePersonagem.innerText = personagem.getAttribute('data-name');
+                const descricaoPersonagem = document.getElementById('descricao-personagem');
+                descricaoPersonagem.innerText = personagem.getAttribute('data-description');
             });
         });
 
-        // Função para selecionar Magneto ao carregar a página
-        window.addEventListener('load', () => {
-            const magneto = document.getElementById('magneto');
-            magneto.classList.add('selecionado');
+        
 
-            document.getElementById('nome-personagem').innerText = magneto.getAttribute('data-name');
-            document.getElementById('descricao-personagem').innerText = magneto.getAttribute('data-description');
-            imagemPersonagemGrande.src = 'imagens/card-magneto.png';
-            imagemPersonagemGrande.style.display = 'block';
-            riveCanvas.style.display = 'none';
-        });
     </script>
 </body>
 

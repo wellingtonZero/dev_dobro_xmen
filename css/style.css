@@ -65,6 +65,8 @@ body::before{
     /*evita que as imagens fiquem desfocadas*/
 }
 
+
+
 .lista-de-personagens .personagem.selecionado{
     /*onde tem personagem.selecionado são duas classes iguais então deve ficar juntas a exemplo no html: "personagem selecionado" esse codigo é apenas para testar o efeito como ficaria no javascript então foi feito sem javascript*/
     box-shadow: 0px 0px 24px 5px #0271f7;
@@ -74,8 +76,21 @@ body::before{
     text-align: center;
     max-height: 530px;/*altura maxima da imagem não ficar pulando entao todas vao ser padrão*/
     max-width: 500px;
+    
 }
-
+.canvas-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+}
+.personagem-grande {
+    width: 100%;  /* Adapta-se à largura do contêiner */
+    max-width: 430px;
+    height: auto; /* Mantém a proporção */
+}
 .personagem-selecionado .personagem-grande{
     width: 430px;
     height: 430px;
